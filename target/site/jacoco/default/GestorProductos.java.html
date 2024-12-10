@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GestorProductos.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">TDD_Demo</a> &gt; <a href="index.source.html" class="el_package">default</a> &gt; <span class="el_source">GestorProductos.java</span></div><h1>GestorProductos.java</h1><pre class="source lang-java linenums">import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L4">public class GestorProductos {</span>
+<span class="fc" id="L5">    private List&lt;Producto&gt; productos = new ArrayList&lt;&gt;();</span>
+
+    public void agregarProducto(String nombre, double precio) {
+<span class="pc bpc" id="L8" title="1 of 6 branches missed.">        if (nombre == null || nombre.isEmpty() || precio &lt;= 0) {</span>
+<span class="fc" id="L9">            throw new IllegalArgumentException(&quot;Nombre no puede ser vacío y el precio debe ser mayor a 0.&quot;);</span>
+        }
+<span class="fc" id="L11">        productos.add(new Producto(nombre, precio));</span>
+<span class="fc" id="L12">    }</span>
+
+    public List&lt;Producto&gt; obtenerProductos() {
+<span class="fc" id="L15">        return productos;</span>
+    }
+
+    public void actualizarPrecio(String nombre, double nuevoPrecio) {
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">        if (nuevoPrecio &lt;= 0) {</span>
+<span class="nc" id="L20">            throw new IllegalArgumentException(&quot;El precio debe ser mayor a 0.&quot;);</span>
+        }
+<span class="fc bfc" id="L22" title="All 2 branches covered.">        for (Producto producto : productos) {</span>
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">            if (producto.getNombre().equals(nombre)) {</span>
+<span class="fc" id="L24">                productos.remove(producto);</span>
+<span class="fc" id="L25">                productos.add(new Producto(nombre, nuevoPrecio));</span>
+<span class="fc" id="L26">                return;</span>
+            }
+        }
+<span class="fc" id="L29">        throw new IllegalArgumentException(&quot;Producto no encontrado.&quot;);</span>
+    }
+
+    public void eliminarProducto(String nombre) {
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">        for (Producto producto : productos) {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            if (producto.getNombre().equals(nombre)) {</span>
+<span class="fc" id="L35">                productos.remove(producto);</span>
+<span class="fc" id="L36">                return;</span>
+            }
+        }
+<span class="nc" id="L39">        throw new IllegalArgumentException(&quot;Producto no encontrado.&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
