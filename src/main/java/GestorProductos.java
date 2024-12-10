@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GestorProductos {
@@ -11,31 +12,36 @@ public class GestorProductos {
         productos.add(new Producto(nombre, precio));
     }
 
+    // Método modificado para devolver una lista inmutable
     public List<Producto> obtenerProductos() {
-        return productos;
+        return Collections.unmodifiableList(new ArrayList<>(productos));
     }
 
     public void actualizarPrecio(String nombre, double nuevoPrecio) {
         if (nuevoPrecio <= 0) {
             throw new IllegalArgumentException("El precio debe ser mayor a 0.");
         }
-        for (Producto producto : productos) {
+
+        boolean productoEncontrado = false;
+        for (int i = 0; i < productos.size(); i++) {
+            Producto producto = productos.get(i);
             if (producto.getNombre().equals(nombre)) {
-                productos.remove(producto);
-                productos.add(new Producto(nombre, nuevoPrecio));
-                return;
+                productos.set(i, new Producto(nombre, nuevoPrecio)); // Actualiza el producto en la misma posición
+                productoEncontrado = true;
+                break;
             }
         }
-        throw new IllegalArgumentException("Producto no encontrado.");
+
+        if (!productoEncontrado) {
+            throw new IllegalArgumentException("Producto no encontrado.");
+        }
     }
 
     public void eliminarProducto(String nombre) {
-        for (Producto producto : productos) {
-            if (producto.getNombre().equals(nombre)) {
-                productos.remove(producto);
-                return;
-            }
+        boolean productoEncontrado = productos.removeIf(producto -> producto.getNombre().equals(nombre));
+
+        if (!productoEncontrado) {
+            throw new IllegalArgumentException("Producto no encontrado.");
         }
-        throw new IllegalArgumentException("Producto no encontrado.");
     }
 }
